@@ -116,7 +116,7 @@ const CoupleDashboard = () => {
                             value={pinInput}
                             onChange={(e) => setPinInput(e.target.value)}
                             placeholder="0000"
-                            className="input-field text-center text-3xl tracking-[1em] h-20 bg-black/30 placeholder-white/10"
+                            className="input-field text-center text-3xl tracking-[0.2em] md:tracking-[1em] h-20 bg-black/30 placeholder-white/10"
                             maxLength={4}
                             autoFocus
                         />
@@ -148,8 +148,8 @@ const CoupleDashboard = () => {
 
             <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-[380px_1fr] gap-8 relative z-10">
 
-                {/* QR Code Section */}
-                <div className="glass-panel text-center space-y-6 h-fit sticky top-6 hover:border-gold/30 transition-colors">
+                {/* QR Code Section - Functionality LAST on mobile */}
+                <div className="glass-panel text-center space-y-6 h-fit md:sticky top-6 hover:border-gold/30 transition-colors order-2 md:order-1">
                     <h3 className="text-2xl font-display">Guest Invite Code</h3>
                     <p className="text-gray-400 text-sm font-light">Scan to view registry</p>
                     <div className="bg-white p-4 rounded-xl inline-block mx-auto shadow-inner">
@@ -169,8 +169,8 @@ const CoupleDashboard = () => {
                     </div>
                 </div>
 
-                {/* Registry Management */}
-                <div className="glass-panel space-y-8">
+                {/* Registry Management - Functionality FIRST on mobile */}
+                <div className="glass-panel space-y-8 order-1 md:order-2">
                     <div className="flex justify-between items-center border-b border-white/10 pb-6">
                         <h3 className="text-2xl font-display flex items-center gap-3">
                             <Gift size={24} className="text-gold" /> Registry
