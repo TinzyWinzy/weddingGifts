@@ -38,27 +38,98 @@ body {
 
 @layer components {
   .btn-primary {
-    @apply font-semibold py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed;
-    background-color: var(--color-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    /* py-3 px-6 */
+    border-radius: 0.75rem;
+    /* rounded-xl */
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.875rem;
+    /* text-sm */
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, var(--color-gold) 0%, #B8860B 100%);
     color: black;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    cursor: pointer;
   }
 
-  .btn-primary:hover {
-    background-color: var(--color-gold-light);
-    box-shadow: 0 4px 6px -1px rgba(212, 175, 55, 0.2);
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 
+  .btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+    background: linear-gradient(135deg, var(--color-gold-light) 0%, #D4AF37 100%);
+  }
+
+  /* Core Glass Panel */
+  .glass-panel {
+    border-radius: 1rem;
+    /* rounded-2xl */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(42, 42, 42, 0.4);
+    /* Fallback */
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  /* Card uses Glass Panel */
   .card {
-    @apply p-6 rounded-2xl shadow-xl border border-white/5 backdrop-blur-sm;
-    background-color: var(--color-card-bg);
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 1.5rem;
+    /* p-6 */
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
   }
 
   .input-field {
-    @apply w-full border border-white/10 rounded-lg p-3 text-white focus:outline-none transition-colors;
-    background-color: rgba(0, 0, 0, 0.2);
+    width: 100%;
+    border-radius: 0.75rem;
+    /* rounded-xl */
+    padding: 1rem;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.3);
+    outline: none;
+    transition: all 0.3s ease;
   }
 
   .input-field:focus {
     border-color: var(--color-gold);
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.1);
+    background: rgba(0, 0, 0, 0.5);
   }
+}
+
+/* Ambient Glows */
+.glow-gold {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glow-purple {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(88, 28, 135, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
 }

@@ -76,7 +76,14 @@ const CoupleDashboard = () => {
         if (!newItem.trim() || isSubmitting) return;
 
         setIsSubmitting(true);
-        await addGift(weddingId, newItem, false, newItemDescription); // false = not a guest
+        const result = await addGift(weddingId, newItem, false, newItemDescription); // false = not a guest
+
+        if (result && result.error) {
+            alert('This gift is already on your registry.'); // Simple alert for dashboard for now
+            setIsSubmitting(false);
+            return;
+        }
+
         setNewItem('');
         setNewItemDescription('');
         setIsSubmitting(false);
@@ -89,28 +96,33 @@ const CoupleDashboard = () => {
 
     if (!isAuthenticated) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-dark-bg p-4">
-                <div className="card max-w-md w-full text-center space-y-6">
+            <div className="min-h-screen flex items-center justify-center bg-dark-bg p-4 overflow-hidden relative font-sans">
+                <div className="glow-gold opacity-40 animate-pulse top-[-20%] left-[-20%]" />
+                <div className="glow-purple opacity-40 bottom-[-20%] right-[-20%]" />
+
+                <div className="glass-panel max-w-md w-full text-center space-y-8 p-10 relative z-10 border-white/10">
                     <div className="flex justify-center text-gold mb-4">
-                        <Lock size={64} className="animate-pulse" />
+                        <div className="p-5 bg-black/40 rounded-full border border-gold/20 shadow-[0_0_30px_rgba(212,175,55,0.15)]">
+                            <Lock size={48} className="animate-pulse" />
+                        </div>
                     </div>
                     <div>
-                        <h2 className="text-3xl font-serif font-bold mb-2">Dashboard Locked</h2>
-                        <p className="text-gray-400">Please enter your PIN to access the registry.</p>
+                        <h2 className="text-3xl font-display font-bold mb-3">Dashboard Locked</h2>
+                        <p className="text-gray-400 font-light text-lg">Please enter your PIN to manage your registry.</p>
                     </div>
-                    <form onSubmit={handleLogin} className="space-y-4">
+                    <form onSubmit={handleLogin} className="space-y-6">
                         <input
                             type="password"
                             value={pinInput}
                             onChange={(e) => setPinInput(e.target.value)}
                             placeholder="0000"
-                            className="input-field text-center text-2xl tracking-[0.5em] h-16"
+                            className="input-field text-center text-3xl tracking-[1em] h-20 bg-black/30 placeholder-white/10"
                             maxLength={4}
                             autoFocus
                         />
-                        {authError && <p className="text-red-400 text-sm">Incorrect PIN. Please try again.</p>}
-                        <button type="submit" className="btn-primary w-full justify-center py-3 text-lg">
-                            Unlock Dashboard <Unlock size={20} />
+                        {authError && <p className="text-red-400 text-sm animate-shake">Incorrect PIN. Please try again.</p>}
+                        <button type="submit" className="btn-primary w-full justify-center py-4 text-base tracking-widest uppercase">
+                            Unlock Dashboard <Unlock size={18} />
                         </button>
                     </form>
                 </div>
@@ -118,45 +130,50 @@ const CoupleDashboard = () => {
         );
     }
 
-    if (!wedding) return <div className="container" style={{ padding: '2rem' }}>Loading Registry...</div>;
+    if (!wedding) return <div className="min-h-screen bg-dark-bg flex items-center justify-center text-gold font-display text-xl animate-pulse">Loading Registry...</div>;
 
     const guestLink = `${window.location.origin}/guest/${weddingId}`;
 
     return (
-        <div className="min-h-screen bg-dark-bg text-white pb-20">
-            <header className="pt-12 pb-8 text-center space-y-2 animate-fade-in">
-                <h1 className="text-4xl md:text-5xl font-serif font-bold text-gold">Wedding Dashboard</h1>
-                <p className="text-gray-400">Manage your registry and invite guests.</p>
+        <div className="min-h-screen bg-dark-bg text-white pb-20 relative overflow-hidden font-sans">
+            <div className="glow-gold opacity-20 top-0 left-0" />
+            <div className="glow-purple opacity-20 bottom-0 right-0" />
+
+            <header className="pt-12 pb-10 text-center space-y-3 animate-fade-in relative z-10">
+                <h1 className="text-4xl md:text-6xl font-display font-bold bg-gradient-to-b from-gold via-gold-light to-gold bg-clip-text text-transparent drop-shadow-sm">
+                    Wedding Dashboard
+                </h1>
+                <p className="text-gray-400 font-light text-lg tracking-wide uppercase">Manage your registry & invite guests</p>
             </header>
 
-            <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-[350px_1fr] gap-8">
+            <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-[380px_1fr] gap-8 relative z-10">
 
                 {/* QR Code Section */}
-                <div className="card text-center space-y-6 h-fit sticky top-6">
-                    <h3 className="text-xl font-semibold">Guest Invite Code</h3>
-                    <p className="text-gray-400 text-sm">Scan to view registry</p>
-                    <div className="bg-white p-4 rounded-xl inline-block mx-auto">
+                <div className="glass-panel text-center space-y-6 h-fit sticky top-6 hover:border-gold/30 transition-colors">
+                    <h3 className="text-2xl font-display">Guest Invite Code</h3>
+                    <p className="text-gray-400 text-sm font-light">Scan to view registry</p>
+                    <div className="bg-white p-4 rounded-xl inline-block mx-auto shadow-inner">
                         <QRCode value={guestLink} size={200} />
                     </div>
-                    <div className="bg-black/30 p-3 rounded-lg flex items-center justify-between gap-2 overflow-hidden">
-                        <p className="text-xs text-gray-400 truncate flex-1 font-mono">
+                    <div className="bg-black/40 p-3 rounded-lg flex items-center justify-between gap-3 overflow-hidden border border-white/5">
+                        <p className="text-xs text-gray-500 truncate flex-1 font-mono tracking-tighter">
                             {guestLink}
                         </p>
                         <button
                             onClick={() => navigator.clipboard.writeText(guestLink)}
-                            className="p-2 hover:bg-white/10 rounded-md transition-colors"
+                            className="p-2 hover:bg-white/10 rounded-md transition-colors text-gold"
                             title="Copy Link"
                         >
-                            <Copy size={14} className="text-gold" />
+                            <Copy size={16} />
                         </button>
                     </div>
                 </div>
 
                 {/* Registry Management */}
-                <div className="card space-y-6">
-                    <div className="flex justify-between items-center border-b border-white/10 pb-4">
-                        <h3 className="text-xl font-semibold flex items-center gap-2">
-                            <Gift size={20} className="text-gold" /> Registry
+                <div className="glass-panel space-y-8">
+                    <div className="flex justify-between items-center border-b border-white/10 pb-6">
+                        <h3 className="text-2xl font-display flex items-center gap-3">
+                            <Gift size={24} className="text-gold" /> Registry
                         </h3>
                         <button
                             className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-colors ${revealGuests ? 'bg-gold/20 text-gold' : 'bg-white/5 hover:bg-white/10 text-gray-400'

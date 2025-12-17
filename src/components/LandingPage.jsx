@@ -58,53 +58,53 @@ const LandingPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-dark-bg text-white relative overflow-hidden">
-            {/* Background Gradient Blob */}
-            <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-gold/10 rounded-full blur-[100px] pointer-events-none" />
-            <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-purple-900/20 rounded-full blur-[100px] pointer-events-none" />
+        <div className="min-h-screen bg-dark-bg text-white relative overflow-hidden font-sans">
+            {/* Ambient Lighting */}
+            <div className="glow-gold top-[-10%] left-[-10%] opacity-60 animate-pulse" style={{ animationDuration: '4s' }} />
+            <div className="glow-purple bottom-[-10%] right-[-10%] opacity-50" />
 
             {/* Hero Section */}
             <section className="relative pt-32 pb-20 px-6 text-center z-10 animate-fade-in">
                 <div className="max-w-4xl mx-auto">
-                    <div className="flex justify-center mb-8">
-                        <div className="p-4 bg-white/5 rounded-full backdrop-blur-md border border-white/10 shadow-glow">
-                            <Gift size={64} className="text-gold" />
+                    <div className="flex justify-center mb-10">
+                        <div className="p-6 bg-white/5 rounded-full backdrop-blur-xl border border-white/10 shadow-[0_0_40px_rgba(212,175,55,0.2)]">
+                            <Gift size={64} className="text-gold dropshadow-glow" />
                         </div>
                     </div>
-                    <h1 className="text-5xl md:text-7xl font-bold font-serif mb-6 leading-tight bg-gradient-to-r from-white via-gold-light to-white bg-clip-text text-transparent">
-                        The Modern Wedding Registry
+                    <h1 className="text-5xl md:text-8xl font-bold font-display mb-8 leading-tight bg-gradient-to-b from-white via-white to-white/70 bg-clip-text text-transparent">
+                        The Modern<br />Wedding Registry
                     </h1>
-                    <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto font-light">
-                        Prevent the "3 Stoves Problem". Let your guests anonymously coordinate gifts so you get exactly what you need, without the awkwardness.
+                    <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+                        Curate your perfect start. Let guests coordinate anonymously. <span className="text-gold">No duplicates. No apps.</span>
                     </p>
                     <div className="flex justify-center">
-                        <button className="btn-primary text-lg px-8 py-4 shadow-xl hover:scale-105 transition-transform" onClick={startRegister}>
-                            Create Registry - $20 <ArrowRight size={20} className="ml-2" />
+                        <button className="btn-primary text-lg px-10 py-5 shadow-2xl hover:shadow-gold/40 hover:scale-105 transition-all" onClick={startRegister}>
+                            Create Registry — $20 <ArrowRight size={20} className="ml-2" />
                         </button>
                     </div>
                 </div>
             </section>
 
             {/* Features */}
-            <section className="py-20 px-6 bg-black/20 backdrop-blur-sm">
+            <section className="py-24 px-6 relative z-10">
                 <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
 
-                    <div className="card hover:border-gold/30 transition-colors group">
-                        <ShieldCheck size={48} className="text-gold mb-6 group-hover:scale-110 transition-transform duration-300" />
-                        <h3 className="text-2xl font-semibold mb-3">Anonymous Coordination</h3>
-                        <p className="text-gray-400 leading-relaxed">Guests see <em>that</em> a toaster was bought, but not <em>who</em> bought it. Maintains the surprise while preventing duplicates.</p>
+                    <div className="card hover:border-gold/40 transition-colors group">
+                        <ShieldCheck size={48} className="text-gold mb-6 group-hover:scale-110 transition-transform duration-500 ease-out" />
+                        <h3 className="text-2xl font-display mb-4">Anonymous Coordination</h3>
+                        <p className="text-gray-400 leading-relaxed font-light">Guests see <em>what</em> is taken, but not <em>who</em> took it. Maintains the surprise while preventing the "3 Stoves Problem".</p>
                     </div>
 
-                    <div className="card hover:border-gold/30 transition-colors group">
-                        <QrCode size={48} className="text-gold mb-6 group-hover:scale-110 transition-transform duration-300" />
-                        <h3 className="text-2xl font-semibold mb-3">Simple QR Access</h3>
-                        <p className="text-gray-400 leading-relaxed">We generate a unique QR code for your physical invitations. Guests scan and instantly see your list. No app download required.</p>
+                    <div className="card hover:border-gold/40 transition-colors group">
+                        <QrCode size={48} className="text-gold mb-6 group-hover:scale-110 transition-transform duration-500 ease-out" />
+                        <h3 className="text-2xl font-display mb-4">Simple QR Access</h3>
+                        <p className="text-gray-400 leading-relaxed font-light">We generate a unique, elegant QR code for your invitations. Guests scan and instantly view your curated list.</p>
                     </div>
 
-                    <div className="card hover:border-gold/30 transition-colors group">
-                        <Gift size={48} className="text-gold mb-6 group-hover:scale-110 transition-transform duration-300" />
-                        <h3 className="text-2xl font-semibold mb-3">Curated Experience</h3>
-                        <p className="text-gray-400 leading-relaxed">A premium, ad-free experience designed specifically for modern weddings. Elegant, simple, and effective.</p>
+                    <div className="card hover:border-gold/40 transition-colors group">
+                        <Gift size={48} className="text-gold mb-6 group-hover:scale-110 transition-transform duration-500 ease-out" />
+                        <h3 className="text-2xl font-display mb-4">Curated Experience</h3>
+                        <p className="text-gray-400 leading-relaxed font-light">A premium, ad-free interface designed to honor the elegance of your special day. Simple, fast, and beautiful.</p>
                     </div>
 
                 </div>

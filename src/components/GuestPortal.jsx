@@ -20,6 +20,14 @@ const GuestPortal = () => {
         if (data) setWedding({ ...data });
     };
 
+    useEffect(() => {
+        if (weddingId) {
+            loadData();
+            const interval = setInterval(loadData, 2000);
+            return () => clearInterval(interval);
+        }
+    }, [weddingId]);
+
     const getMyClaims = () => {
         try {
             return JSON.parse(localStorage.getItem(`claims_${weddingId}`)) || [];
@@ -38,9 +46,8 @@ const GuestPortal = () => {
         localStorage.setItem(`claims_${weddingId}`, JSON.stringify(claims.filter(id => id !== giftId)));
     };
 
-    useEffect(() => {
-        loadData();
 
+    useEffect(() => {
         const subscription = supabase
             .channel(`guest:${weddingId}`)
             .on('postgres_changes', {
@@ -112,7 +119,15 @@ const GuestPortal = () => {
         if (!input.trim() || isSubmitting) return;
 
         setIsSubmitting(true);
-        await addGift(weddingId, input, true);
+        const result = await addGift(weddingId, input, true);
+
+        if (result && result.error) {
+            openInfoModal('Already Listed', `"${input}" is already on the registry!`);
+            e.target.reset();
+            setIsSubmitting(false);
+            return;
+        }
+
         e.target.reset();
         setIsSubmitting(false);
 
@@ -120,47 +135,50 @@ const GuestPortal = () => {
         loadData();
     };
 
-    if (!wedding) return <div className="min-h-screen bg-dark-bg text-white flex items-center justify-center">Loading Registry...</div>;
+    if (!wedding) return <div className="min-h-screen bg-dark-bg flex items-center justify-center text-gold font-display text-xl animate-pulse">Loading Registry...</div>;
 
     return (
-        <div className="min-h-screen bg-dark-bg text-white pb-20">
-            <header className="pt-12 pb-8 text-center space-y-2 animate-fade-in">
-                <h2 className="text-3xl md:text-5xl font-serif font-bold text-gold">Wedding Registry</h2>
-                <div className="flex items-center justify-center gap-2 text-gray-400">
-                    <span>for</span>
-                    <span className="text-xl text-white font-medium">{wedding.coupleName}</span>
-                </div>
+        <div className="min-h-screen bg-dark-bg text-white pb-20 font-sans relative overflow-hidden">
+            <div className="glow-gold opacity-20 top-[-20%] right-[-20%]" />
+            <div className="glow-purple opacity-20 bottom-[-20%] left-[-20%]" />
+
+            <header className="pt-16 pb-12 text-center space-y-4 animate-fade-in relative z-10">
+                <div className="text-gold uppercase tracking-[0.3em] text-sm mb-2">My Wedding Registry</div>
+                <h2 className="text-4xl md:text-7xl font-display font-medium text-white drop-shadow-2xl">
+                    {wedding.coupleName}
+                </h2>
+                <div className="w-20 h-1 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto opacity-70"></div>
             </header>
 
-            <div className="max-w-2xl mx-auto px-6 space-y-8 animate-fade-in">
+            <div className="max-w-3xl mx-auto px-6 space-y-10 animate-fade-in relative z-10">
 
                 {/* Guest Input Section */}
-                <div className="card text-center space-y-4">
+                <div className="glass-panel text-center space-y-6 p-8 border-gold/10">
                     <div>
-                        <h3 className="text-xl font-semibold mb-1">Bringing something not on the list?</h3>
-                        <p className="text-gray-400 text-sm">
-                            Post what you are giving to avoid duplicate gifts!
+                        <h3 className="text-xl font-display mb-2">Bringing a surprise gift?</h3>
+                        <p className="text-gray-400 text-sm font-light">
+                            Help us avoid duplicates by listing it below.
                         </p>
                     </div>
-                    <form onSubmit={handleAddStart} className="flex gap-2">
+                    <form onSubmit={handleAddStart} className="flex gap-3">
                         <input
                             name="newItem"
                             type="text"
                             placeholder="I am giving a..."
                             aria-label="Gift description"
-                            className="input-field flex-1"
+                            className="input-field flex-1 bg-black/40"
                             disabled={isSubmitting}
                         />
-                        <button className="btn-primary whitespace-nowrap" type="submit" disabled={isSubmitting}>
-                            {isSubmitting ? '...' : 'Post Gift'}
+                        <button className="btn-primary whitespace-nowrap bg-gradient-to-r from-gray-200 to-white text-black hover:from-white hover:to-gray-100 shadow-none border-0" type="submit" disabled={isSubmitting} style={{ background: '#fff' }}>
+                            {isSubmitting ? '...' : 'Post'}
                         </button>
                     </form>
                 </div>
 
                 {/* Registry List */}
-                <div className="card space-y-6">
-                    <h3 className="text-xl font-semibold flex items-center gap-2 border-b border-white/10 pb-4">
-                        <Gift size={20} className="text-gold" /> Current Registry Status
+                <div className="glass-panel space-y-4">
+                    <h3 className="text-2xl font-display flex items-center gap-3 border-b border-white/10 pb-6 mb-4 px-2">
+                        <Gift size={24} className="text-gold" /> Desired Gifts
                     </h3>
                     <div className="space-y-3">
                         {wedding.gifts.map(gift => (

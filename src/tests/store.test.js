@@ -1,6 +1,5 @@
-
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { createWedding, getWedding, addGift, claimGift } from '../lib/store';
+import { createWedding, addGift } from '../lib/store';
 import { supabase } from '../lib/supabase';
 
 // Mock Supabase
@@ -34,9 +33,22 @@ describe('Store Logic', () => {
 
     it('addGift should insert data correctly', async () => {
         const mockReturn = { data: { item_name: 'Toaster' }, error: null };
-        const insertMock = vi.fn().mockReturnValue({ select: vi.fn().mockReturnValue({ single: vi.fn().mockResolvedValue(mockReturn) }) });
 
-        supabase.from.mockReturnValue({ insert: insertMock });
+        // Mock Dup Check: select -> eq -> ilike -> maybeSingle
+        const maybeSingleMock = vi.fn().mockResolvedValue({ data: null });
+        const ilikeMock = vi.fn().mockReturnValue({ maybeSingle: maybeSingleMock });
+        const eqMock = vi.fn().mockReturnValue({ ilike: ilikeMock });
+        const selectReadMock = vi.fn().mockReturnValue({ eq: eqMock });
+
+        // Mock Insert: insert -> select -> single
+        const singleMock = vi.fn().mockResolvedValue(mockReturn);
+        const selectWriteMock = vi.fn().mockReturnValue({ single: singleMock });
+        const insertMock = vi.fn().mockReturnValue({ select: selectWriteMock });
+
+        supabase.from.mockReturnValue({
+            select: selectReadMock,
+            insert: insertMock
+        });
 
         const result = await addGift('w_123', 'Toaster');
         expect(result.item).toBe('Toaster');

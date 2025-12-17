@@ -1,0 +1,18 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - generic [ref=e4]: "[plugin:vite:react-babel] C:\\Users\\USER\\Documents\\DEV_SPACE\\src\\components\\GuestPortal.jsx: Missing initializer in destructuring declaration. (65:14) 68 | const openInfoModal = (title, message) => {"
+  - generic [ref=e5]: C:/Users/USER/Documents/DEV_SPACE/src/components/GuestPortal.jsx:65:14
+  - generic [ref=e6]: "66 | 67 | // Modal Handlers 68 | const openInfoModal = (title, message) => { | ^ 69 | setModal({ isOpen: true, type: 'INFO', title, message, data: null }); 70 | };"
+  - generic [ref=e7]: at constructor (C:\Users\USER\Documents\DEV_SPACE\node_modules\@babel\parser\lib\index.js:367:19) at JSXParserMixin.raise (C:\Users\USER\Documents\DEV_SPACE\node_modules\@babel\parser\lib\index.js:6624:19) at JSXParserMixin.parseVar (C:\Users\USER\Documents\DEV_SPACE\node_modules\@babel\parser\lib\index.js:13463:16) at JSXParserMixin.parseVarStatement (C:\Users\USER\Documents\DEV_SPACE\node_modules\@babel\parser\lib\index.js:13306:10) at JSXParserMixin.parseStatementContent (C:\Users\USER\Documents\DEV_SPACE\node_modules\@babel\parser\lib\index.js:12927:23) at JSXParserMixin.parseStatementLike (C:\Users\USER\Documents\DEV_SPACE\node_modules\@babel\parser\lib\index.js:12843:17) at JSXParserMixin.parseModuleItem (C:\Users\USER\Documents\DEV_SPACE\node_modules\@babel\parser\lib\index.js:12820:17) at JSXParserMixin.parseBlockOrModuleBlockBody (C:\Users\USER\Documents\DEV_SPACE\node_modules\@babel\parser\lib\index.js:13392:36) at JSXParserMixin.parseBlockBody (C:\Users\USER\Documents\DEV_SPACE\node_modules\@babel\parser\lib\index.js:13385:10) at JSXParserMixin.parseProgram (C:\Users\USER\Documents\DEV_SPACE\node_modules\@babel\parser\lib\index.js:12698:10) at JSXParserMixin.parseTopLevel (C:\Users\USER\Documents\DEV_SPACE\node_modules\@babel\parser\lib\index.js:12688:25) at JSXParserMixin.parse (C:\Users\USER\Documents\DEV_SPACE\node_modules\@babel\parser\lib\index.js:14568:25) at parse (C:\Users\USER\Documents\DEV_SPACE\node_modules\@babel\parser\lib\index.js:14602:38) at parser (C:\Users\USER\Documents\DEV_SPACE\node_modules\@babel\core\lib\parser\index.js:41:34) at parser.next (<anonymous>) at normalizeFile (C:\Users\USER\Documents\DEV_SPACE\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37) at normalizeFile.next (<anonymous>) at run (C:\Users\USER\Documents\DEV_SPACE\node_modules\@babel\core\lib\transformation\index.js:22:50) at run.next (<anonymous>) at transform (C:\Users\USER\Documents\DEV_SPACE\node_modules\@babel\core\lib\transform.js:22:33) at transform.next (<anonymous>) at step (C:\Users\USER\Documents\DEV_SPACE\node_modules\gensync\index.js:261:32) at C:\Users\USER\Documents\DEV_SPACE\node_modules\gensync\index.js:273:13 at async.call.result.err.err (C:\Users\USER\Documents\DEV_SPACE\node_modules\gensync\index.js:223:11) at C:\Users\USER\Documents\DEV_SPACE\node_modules\gensync\index.js:189:28 at C:\Users\USER\Documents\DEV_SPACE\node_modules\@babel\core\lib\gensync-utils\async.js:67:7 at C:\Users\USER\Documents\DEV_SPACE\node_modules\gensync\index.js:113:33 at step (C:\Users\USER\Documents\DEV_SPACE\node_modules\gensync\index.js:287:14) at C:\Users\USER\Documents\DEV_SPACE\node_modules\gensync\index.js:273:13 at async.call.result.err.err (C:\Users\USER\Documents\DEV_SPACE\node_modules\gensync\index.js:223:11)
+  - generic [ref=e8]:
+    - text: Click outside, press Esc key, or fix the code to dismiss.
+    - text: You can also disable this overlay by setting
+    - code [ref=e9]: server.hmr.overlay
+    - text: to
+    - code [ref=e10]: "false"
+    - text: in
+    - code [ref=e11]: vite.config.js
+    - text: .
+```

@@ -82,6 +82,18 @@ export const addGift = async (weddingId, itemName) => {
     const name = typeof itemName === 'object' ? itemName.name : itemName;
     const desc = typeof itemName === 'object' ? itemName.description : '';
 
+    // Check for duplicates (case-insensitive)
+    const { data: existing } = await supabase
+        .from('gifts')
+        .select('id')
+        .eq('wedding_id', weddingId)
+        .ilike('item_name', name)
+        .maybeSingle();
+
+    if (existing) {
+        return { error: 'Duplicate gift found' }; // Return special object or handle differently
+    }
+
     const { data, error } = await supabase
         .from('gifts')
         .insert([{
@@ -103,10 +115,11 @@ export const addGift = async (weddingId, itemName) => {
     };
 };
 
-export const linkGift = async (weddingId, giftId, description) => {
-    // Helper to update description if needed separately
-    return null;
-};
+// export const addGiftDescription = async (weddingId, giftId, description) => {
+//    console.log('Not implemented yet');
+// };
+// Helper to update description if needed separately
+// return null; // This line was part of the original linkGift function, now commented out as it's no longer in a function scope.
 
 export const toggleThankYou = async (giftId, status) => {
     const { error } = await supabase

@@ -10,9 +10,9 @@ const Modal = ({ isOpen, onClose, title, children, actions }) => {
                 className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
                 onClick={onClose}
             />
-            <div className="relative bg-card-bg border border-white/10 rounded-2xl shadow-2xl w-full max-w-md p-6 space-y-4 animate-fade-in">
+            <div className="relative glass-panel w-full max-w-md p-6 space-y-4 animate-fade-in shadow-[0_0_50px_rgba(0,0,0,0.5)]">
                 <div className="flex justify-between items-center">
-                    <h3 className="text-xl font-serif font-bold text-white">{title}</h3>
+                    <h3 className="text-xl font-display font-bold text-white">{title}</h3>
                     <button
                         onClick={onClose}
                         className="p-1 hover:bg-white/10 rounded-full transition-colors"
