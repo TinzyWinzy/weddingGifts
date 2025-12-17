@@ -13,10 +13,14 @@ import { supabase } from './supabase';
 //     localStorage.setItem(DB_KEY, JSON.stringify(data));
 // };
 
-export const createWedding = async (coupleName) => {
+export const createWedding = async (coupleName, pin) => {
     const { data, error } = await supabase
         .from('weddings')
-        .insert([{ couple_name: coupleName, created_at: new Date() }])
+        .insert([{
+            couple_name: coupleName,
+            pin: pin,
+            created_at: new Date()
+        }])
         .select()
         .single();
 
@@ -27,11 +31,22 @@ export const createWedding = async (coupleName) => {
     return data.id;
 };
 
+export const verifyPin = async (weddingId, pin) => {
+    const { data, error } = await supabase
+        .from('weddings')
+        .select('id')
+        .eq('id', weddingId)
+        .eq('pin', pin)
+        .single();
+
+    return !error && !!data;
+};
+
 export const getWedding = async (id) => {
-    // Get wedding details
+    // Get wedding details - explicitly select columns to exclude PIN
     const { data: wedding, error: wError } = await supabase
         .from('weddings')
-        .select('*')
+        .select('id, couple_name, created_at')
         .eq('id', id)
         .single();
 
