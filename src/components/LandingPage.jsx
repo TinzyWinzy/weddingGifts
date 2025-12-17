@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Gift, ShieldCheck, QrCode, ArrowRight, CreditCard, Lock, User } from 'lucide-react';
 import { createWedding } from '../lib/store';
 import Modal from './ui/Modal';
+import PaynowForm from './ui/PaynowForm'; // Import PaynowForm
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -16,6 +17,14 @@ const LandingPage = () => {
         setWizardState({ isOpen: true, step: 'NAME', name: '', pin: '' });
         setInputVal(''); // Reset input for name step
         setError('');
+    };
+
+    const handlePaymentSuccess = async (name, pin) => {
+        const id = await createWedding(name, pin);
+        if (id) {
+            localStorage.setItem(`dashboard_auth_${id}`, pin);
+            navigate(`/dashboard?id=${id}`);
+        }
     };
 
     const handleNext = async () => {
@@ -40,16 +49,6 @@ const LandingPage = () => {
             }
             setWizardState(prev => ({ ...prev, pin: inputVal, step: 'PAYMENT' }));
             return;
-        }
-
-        // Step 3: Payment (Final)
-        if (wizardState.step === 'PAYMENT') {
-            const { name, pin } = wizardState;
-            const id = await createWedding(name, pin);
-            if (id) {
-                localStorage.setItem(`dashboard_auth_${id}`, pin);
-                navigate(`/dashboard?id=${id}`);
-            }
         }
     };
 
@@ -167,15 +166,13 @@ const LandingPage = () => {
                     )}
 
                     {wizardState.step === 'PAYMENT' && (
-                        <div className="space-y-6 text-center">
-                            <div className="bg-white/5 p-6 rounded-xl border border-white/10 mx-auto max-w-[300px]">
-                                <h4 className="text-lg font-semibold mb-2">{wizardState.name}'s Registry</h4>
-                                <div className="text-3xl font-bold text-gold mb-1">$20.00</div>
-                                <p className="text-xs text-gray-400">One-time payment</p>
-                            </div>
-                            <div className="text-sm text-gray-400 flex items-center justify-center gap-2">
-                                <CreditCard size={16} /> Secure Payment via Stripe (Simulated)
-                            </div>
+                        <div className="w-full">
+                            <PaynowForm
+                                amount={20}
+                                coupleName={wizardState.name}
+                                onSuccess={() => handlePaymentSuccess(wizardState.name, wizardState.pin)}
+                                onCancel={closeWizard}
+                            />
                         </div>
                     )}
 
