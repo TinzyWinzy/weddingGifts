@@ -72,10 +72,10 @@ const LandingPage = () => {
                         </div>
                     </div>
                     <h1 className="text-5xl md:text-8xl font-bold font-display mb-8 leading-tight bg-gradient-to-b from-white via-white to-white/70 bg-clip-text text-transparent">
-                        The Modern<br />Wedding Registry
+                        Your Love Story,<br />Registry Reimagined
                     </h1>
                     <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
-                        Curate your perfect start. Let guests coordinate anonymously. <span className="text-gold">No duplicates. No apps.</span>
+                        Celebrate your union with gifts that matter. <span className="text-gold">Simple. Authentic. Yours.</span>
                     </p>
                     <div className="flex justify-center">
                         <button className="btn-primary text-lg px-10 py-5 shadow-2xl hover:shadow-gold/40 hover:scale-105 transition-all" onClick={startRegister}>
