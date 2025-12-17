@@ -160,7 +160,7 @@ const GuestPortal = () => {
                             Help us avoid duplicates by listing it below.
                         </p>
                     </div>
-                    <form onSubmit={handleAddStart} className="flex gap-3">
+                    <form onSubmit={handleAddStart} className="flex gap-3 max-[422px]:flex-col">
                         <input
                             name="newItem"
                             type="text"

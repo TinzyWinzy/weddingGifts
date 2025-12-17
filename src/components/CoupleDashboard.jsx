@@ -149,7 +149,7 @@ const CoupleDashboard = () => {
             <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-[380px_1fr] gap-8 relative z-10">
 
                 {/* QR Code Section - Functionality LAST on mobile */}
-                <div className="glass-panel text-center space-y-6 h-fit md:sticky top-6 hover:border-gold/30 transition-colors order-2 md:order-1">
+                <div className="glass-panel p-6 text-center space-y-6 h-fit md:sticky top-6 hover:border-gold/30 transition-colors order-2 md:order-1">
                     <h3 className="text-2xl font-display">Guest Invite Code</h3>
                     <p className="text-gray-400 text-sm font-light">Scan to view registry</p>
                     <div className="bg-white p-4 rounded-xl inline-block mx-auto shadow-inner">
@@ -170,7 +170,7 @@ const CoupleDashboard = () => {
                 </div>
 
                 {/* Registry Management - Functionality FIRST on mobile */}
-                <div className="glass-panel space-y-8 order-1 md:order-2">
+                <div className="glass-panel p-6 space-y-8 order-1 md:order-2">
                     <div className="flex justify-between items-center border-b border-white/10 pb-6">
                         <h3 className="text-2xl font-display flex items-center gap-3">
                             <Gift size={24} className="text-gold" /> Registry
@@ -186,14 +186,14 @@ const CoupleDashboard = () => {
                     </div>
 
                     <form onSubmit={handleAddStart} className="space-y-3">
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 max-[422px]:flex-col">
                             <input
                                 type="text"
                                 value={newItem}
                                 onChange={(e) => setNewItem(e.target.value)}
                                 placeholder="Add gift (e.g. Toaster)"
                                 aria-label="New gift name"
-                                className="input-field flex-1"
+                                className="input-field flex-1 min-w-0"
                                 disabled={isSubmitting}
                             />
                             <button className="btn-primary" type="submit" disabled={isSubmitting}>
@@ -218,15 +218,15 @@ const CoupleDashboard = () => {
                             </div>
                         ) : (
                             wedding.gifts.map(gift => (
-                                <div key={gift.id} className="bg-black/20 rounded-xl p-4 flex justify-between items-start group hover:bg-black/30 transition-colors">
-                                    <div className="space-y-1">
-                                        <span className="font-medium text-lg block">{gift.item}</span>
-                                        {gift.description && <p className="text-sm text-gray-400">{gift.description}</p>}
+                                <div key={gift.id} className="bg-black/20 rounded-xl p-4 flex flex-col md:flex-row justify-between items-start gap-4 md:gap-0 group hover:bg-black/30 transition-colors">
+                                    <div className="space-y-1 w-full md:w-auto">
+                                        <span className="font-medium text-lg block break-words">{gift.item}</span>
+                                        {gift.description && <p className="text-sm text-gray-400 break-words">{gift.description}</p>}
                                     </div>
 
                                     {gift.claimed ? (
-                                        <div className="text-right space-y-2">
-                                            <div className="inline-flex items-center gap-2 bg-gold/10 text-gold px-3 py-1 rounded-full text-sm font-medium border border-gold/20">
+                                        <div className="w-full md:w-auto md:text-right space-y-2">
+                                            <div className="inline-flex items-center gap-2 bg-gold/10 text-gold px-3 py-1 rounded-full text-sm font-medium border border-gold/20 w-fit md:ml-auto">
                                                 <Gift size={14} />
                                                 {revealGuests ? (
                                                     <span className="truncate max-w-[150px]">{gift.claimerName}</span>
@@ -235,7 +235,7 @@ const CoupleDashboard = () => {
                                                 )}
                                             </div>
                                             {revealGuests && gift.claimed && (
-                                                <div className="flex items-center justify-end gap-2 text-sm text-gray-400">
+                                                <div className="flex items-center md:justify-end gap-2 text-sm text-gray-400">
                                                     <input
                                                         type="checkbox"
                                                         checked={gift.thankYouSent || false}
@@ -247,7 +247,7 @@ const CoupleDashboard = () => {
                                             )}
                                         </div>
                                     ) : (
-                                        <span className="text-xs font-semibold bg-white/5 text-gray-500 px-2 py-1 rounded uppercase tracking-wider">
+                                        <span className="text-xs font-semibold bg-white/5 text-gray-500 px-2 py-1 rounded uppercase tracking-wider w-fit md:ml-auto">
                                             Available
                                         </span>
                                     )}
